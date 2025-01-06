@@ -13,11 +13,6 @@ jobs:
     container: ubuntu:24.04
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-           submodules: recursive
-           
       - name: Install compiling tools
         run: |
           apt-get -y update
@@ -30,6 +25,11 @@ jobs:
           sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
           locale-gen
 
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+           submodules: recursive
+           
       - name: Configure CMake
         run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
